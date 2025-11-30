@@ -1,258 +1,468 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // ----- MODAL CREAR CUENTA -----
-  const modal = document.getElementById("modal-registro");
-  const btnSignup = document.querySelector(".signup-btn");
-  const btnCerrar = document.querySelector(".cerrar");
-
-  // Mostrar el modal
-  btnSignup.addEventListener("click", () => {
-    modal.style.display = "block";
-  });
-
-  // Cerrar al hacer clic en la X
-  btnCerrar.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
-
-  // Cerrar al hacer clic fuera del modal
-  window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-
-  // ----- CAMBIO DE IDIOMA -----
-  const lang = document.querySelector(".languaje");
-  const dropdown = lang.querySelector("ul");
-  const selected = lang.querySelector(".languaje-selected");
-
-  const translations = {
-    es: {
-      menuHome: "Inicio",
-      menuCourses: "Cursos",
-      menuHistory: "Historia de la Música",
-      menuTheory: "Teoría Musical",
-      btnLogin: "Iniciar Sesión",
-      btnSignup: "Crear Cuenta",
-      title: "Bienvenido a MSC STUDY",
-      description: "Explora clases interactivas y aprende música con pasión.",
-      btnStart: "Comenzar Ahora"
-    },
-    en: {
-      menuHome: "Home",
-      menuCourses: "Courses",
-      menuHistory: "Music History",
-      menuTheory: "Music Theory",
-      btnLogin: "Login",
-      btnSignup: "Sign Up",
-      title: "Welcome to MSC STUDY",
-      description: "Explore interactive lessons and learn music with passion.",
-      btnStart: "Start Now"
-    },
-    pt: {
-      menuHome: "Início",
-      menuCourses: "Cursos",
-      menuHistory: "História da Música",
-      menuTheory: "Teoria Musical",
-      btnLogin: "Entrar",
-      btnSignup: "Criar Conta",
-      title: "Bem-vindo ao MSC STUDY",
-      description: "Explore aulas interativas e aprenda música com paixão.",
-      btnStart: "Começar Agora"
-    }
-  };
-
-  selected.addEventListener("click", (e) => {
-    e.stopPropagation();
-    dropdown.classList.toggle("show");
-  });
-
-  document.addEventListener("click", () => {
-    dropdown.classList.remove("show");
-  });
-
-  lang.querySelectorAll("li").forEach((item) => {
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      const flagUrl = item.getAttribute("data-flag");
-      const selectedLang = item.getAttribute("data-lang");
-
-      selected.innerHTML = `<span class="flag" style="background-image: url('${flagUrl}');"></span>`;
-      dropdown.classList.remove("show");
-
-      document.querySelectorAll("[data-translate]").forEach((el) => {
-        const key = el.getAttribute("data-translate");
-        el.textContent = translations[selectedLang][key];
-      });
-    });
-  });
-});
-// Funcionalidad del modal de login
+// script.js - Código completo y funcional
 document.addEventListener("DOMContentLoaded", function() {
-  // Elementos del DOM
-  const loginModal = document.getElementById("loginModal");
-  const loginBtn = document.querySelector(".login-btn");
-  const closeLogin = document.querySelector(".close-login");
-  const loginForm = document.getElementById("loginForm");
-  const formMessage = document.getElementById("formMessage");
-  const registerLink = document.querySelector('.register-link');
-  const forgotPassword = document.querySelector('.forgot-password');
-
-  // Abrir modal
-  loginBtn.addEventListener("click", function(e) {
-    e.preventDefault();
-    openLoginModal();
-  });
-
-  // Cerrar modal
-  closeLogin.addEventListener("click", closeLoginModal);
-
-  // Cerrar al hacer clic fuera del modal
-  loginModal.addEventListener("click", function(e) {
-    if (e.target === loginModal) {
-      closeLoginModal();
-    }
-  });
-
-  // Cerrar con ESC
-  document.addEventListener("keydown", function(e) {
-    if (e.key === "Escape" && loginModal.style.display === "flex") {
-      closeLoginModal();
-    }
-  });
-
-  // Envío del formulario
-  loginForm.addEventListener("submit", handleLoginSubmit);
-
-  // Enlace de registro
-  registerLink?.addEventListener('click', function(e) {
-    e.preventDefault();
-    alert('Funcionalidad de registro próximamente...');
-    // Aquí puedes redirigir a la página de registro o abrir otro modal
-  });
-
-  // Olvidé mi contraseña
-  forgotPassword?.addEventListener('click', function(e) {
-    e.preventDefault();
-    alert('Funcionalidad de recuperación de contraseña próximamente...');
-  });
-
-  // Funciones
-  function openLoginModal() {
-    loginModal.style.display = "flex";
-    document.body.style.overflow = "hidden";
-    resetForm();
-  }
-
-  function closeLoginModal() {
-    loginModal.style.display = "none";
-    document.body.style.overflow = "auto";
-    resetForm();
-  }
-
-  function resetForm() {
-    loginForm.reset();
-    formMessage.style.display = 'none';
-    formMessage.className = 'form-message';
-  }
-
-  async function handleLoginSubmit(e) {
-    e.preventDefault();
+    console.log("Página cargada correctamente");
     
-    const formData = new FormData(loginForm);
+    // ===== INICIALIZACIÓN =====
+    inicializarModales();
+    inicializarEventListeners();
+    verificarUsuarioLogueado();
+});
+
+function inicializarModales() {
+    // Ocultar modales al inicio
+    const loginModal = document.getElementById("loginModal");
+    const registerModal = document.getElementById("registerModal");
+    
+    if (loginModal) loginModal.style.display = "none";
+    if (registerModal) registerModal.style.display = "none";
+}
+
+function inicializarEventListeners() {
+    // Botones de autenticación
+    const loginBtn = document.querySelector(".login-btn");
+    const signupBtn = document.querySelector(".signup-btn");
+    
+    if (loginBtn) {
+        loginBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            console.log("Abriendo modal de login");
+            abrirModal('loginModal');
+        });
+    }
+    
+    if (signupBtn) {
+        signupBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            console.log("Abriendo modal de registro");
+            abrirModal('registerModal');
+        });
+    }
+    
+    // Cerrar modales
+    const closeLogin = document.querySelector(".close-login");
+    const closeRegister = document.querySelector(".close-register");
+    
+    if (closeLogin) {
+        closeLogin.addEventListener("click", function() {
+            console.log("Cerrando modal de login");
+            cerrarModal('loginModal');
+        });
+    }
+    
+    if (closeRegister) {
+        closeRegister.addEventListener("click", function() {
+            console.log("Cerrando modal de registro");
+            cerrarModal('registerModal');
+        });
+    }
+    
+    // Formularios
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    
+    if (loginForm) {
+        loginForm.addEventListener("submit", manejarLogin);
+    }
+    
+    if (registerForm) {
+        registerForm.addEventListener("submit", manejarRegistro);
+    }
+    
+    // Enlaces entre modales
+    const registerLink = document.querySelector('.register-link');
+    const loginLink = document.querySelector('.login-link');
+    
+    if (registerLink) {
+        registerLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            cerrarModal('loginModal');
+            setTimeout(() => abrirModal('registerModal'), 300);
+        });
+    }
+    
+    if (loginLink) {
+        loginLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            cerrarModal('registerModal');
+            setTimeout(() => abrirModal('loginModal'), 300);
+        });
+    }
+    
+    // Menú de usuario
+    const userMenuBtn = document.getElementById("userMenuBtn");
+    const logoutLink = document.getElementById("logoutLink");
+    
+    if (userMenuBtn) {
+        userMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const userDropdown = document.getElementById("userDropdown");
+            if (userDropdown) {
+                userDropdown.classList.toggle('show');
+            }
+        });
+    }
+    
+    if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            cerrarSesion();
+        });
+    }
+    
+    // Cerrar menú desplegable al hacer clic fuera
+    document.addEventListener('click', function() {
+        const userDropdown = document.getElementById("userDropdown");
+        if (userDropdown) {
+            userDropdown.classList.remove('show');
+        }
+    });
+    
+    // Cerrar modales con ESC
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+            cerrarModal('loginModal');
+            cerrarModal('registerModal');
+        }
+    });
+}
+
+// ===== FUNCIONES DE MODALES =====
+function abrirModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+        resetFormularios();
+    }
+}
+
+function cerrarModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+        resetFormularios();
+    }
+}
+
+function resetFormularios() {
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    const formMessage = document.getElementById("formMessage");
+    const registerMessage = document.getElementById("registerMessage");
+    
+    if (loginForm) loginForm.reset();
+    if (registerForm) registerForm.reset();
+    
+    if (formMessage) {
+        formMessage.style.display = 'none';
+        formMessage.className = 'form-message';
+    }
+    
+    if (registerMessage) {
+        registerMessage.style.display = 'none';
+        registerMessage.className = 'form-message';
+    }
+}
+
+// ===== MANEJO DE FORMULARIOS =====
+async function manejarLogin(e) {
+    e.preventDefault();
+    console.log("Procesando login...");
+    
+    const formData = new FormData(e.target);
     const email = formData.get('email');
     const password = formData.get('password');
     const remember = formData.get('remember');
     
-    // Validaciones básicas
-    if (!validateEmail(email)) {
-      showMessage('Por favor, ingresa un email válido', 'error');
-      return;
+    // Validaciones
+    if (!validarEmail(email)) {
+        mostrarMensaje('formMessage', 'Por favor, ingresa un email válido', 'error');
+        return;
     }
 
     if (password.length < 6) {
-      showMessage('La contraseña debe tener al menos 6 caracteres', 'error');
-      return;
+        mostrarMensaje('formMessage', 'La contraseña debe tener al menos 6 caracteres', 'error');
+        return;
     }
 
-    // Simular envío al servidor
-    await simulateLogin(email, password, remember);
-  }
+    // Procesar login
+    await procesarLogin(email, password, remember);
+}
 
-  function validateEmail(email) {
+async function manejarRegistro(e) {
+    e.preventDefault();
+    console.log("Procesando registro...");
+    
+    const formData = new FormData(e.target);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const password = formData.get('password');
+    const confirmPassword = formData.get('confirmPassword');
+    
+    // Validaciones
+    if (name.length < 2) {
+        mostrarMensaje('registerMessage', 'El nombre debe tener al menos 2 caracteres', 'error');
+        return;
+    }
+
+    if (!validarEmail(email)) {
+        mostrarMensaje('registerMessage', 'Por favor, ingresa un email válido', 'error');
+        return;
+    }
+
+    if (password.length < 6) {
+        mostrarMensaje('registerMessage', 'La contraseña debe tener al menos 6 caracteres', 'error');
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        mostrarMensaje('registerMessage', 'Las contraseñas no coinciden', 'error');
+        return;
+    }
+
+    // Procesar registro
+    await procesarRegistro(name, email, password);
+}
+
+// ===== VALIDACIONES =====
+function validarEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  }
+}
 
-  function showMessage(message, type) {
-    formMessage.textContent = message;
-    formMessage.className = `form-message ${type}`;
-    formMessage.style.display = 'block';
-    
-    // Auto-ocultar mensajes de éxito después de 3 segundos
-    if (type === 'success') {
-      setTimeout(() => {
-        formMessage.style.display = 'none';
-      }, 3000);
+function mostrarMensaje(elementId, mensaje, tipo) {
+    const elemento = document.getElementById(elementId);
+    if (elemento) {
+        elemento.textContent = mensaje;
+        elemento.className = `form-message ${tipo}`;
+        elemento.style.display = 'block';
     }
-  }
+}
 
-  // Reemplaza la función simulateLogin con esta para usar una API real:
-async function realLogin(email, password) {
-  try {
-    const response = await fetch('https://tu-api.com/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+// ===== BASE DE DATOS (LOCALSTORAGE) =====
+function obtenerUsuarios() {
+    return JSON.parse(localStorage.getItem('mscStudyUsers') || '[]');
+}
+
+function guardarUsuarios(usuarios) {
+    localStorage.setItem('mscStudyUsers', JSON.stringify(usuarios));
+}
+
+function obtenerUsuarioActual() {
+    return localStorage.getItem('mscStudyCurrentUser') || sessionStorage.getItem('mscStudyCurrentUser');
+}
+
+function guardarUsuarioActual(usuario, recordar) {
+    if (recordar) {
+        localStorage.setItem('mscStudyCurrentUser', JSON.stringify(usuario));
+    } else {
+        sessionStorage.setItem('mscStudyCurrentUser', JSON.stringify(usuario));
+    }
+}
+
+function eliminarUsuarioActual() {
+    localStorage.removeItem('mscStudyCurrentUser');
+    sessionStorage.removeItem('mscStudyCurrentUser');
+}
+
+// ===== AUTENTICACIÓN =====
+async function procesarLogin(email, password, remember) {
+    mostrarMensaje('formMessage', 'Iniciando sesión...', 'loading');
+    
+    // Simular delay de red
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Buscar usuario en la "base de datos"
+    const usuarios = obtenerUsuarios();
+    const usuario = usuarios.find(u => u.email === email && u.password === password);
+    
+    if (usuario) {
+        // Crear sesión de usuario
+        const sesionUsuario = {
+            id: usuario.id,
+            name: usuario.name,
+            email: usuario.email,
+            loggedIn: true
+        };
+        
+        guardarUsuarioActual(sesionUsuario, remember);
+        
+        mostrarMensaje('formMessage', '¡Inicio de sesión exitoso!', 'success');
+        
+        setTimeout(() => {
+            cerrarModal('loginModal');
+            actualizarInterfazUsuario(sesionUsuario);
+        }, 1000);
+    } else {
+        mostrarMensaje('formMessage', 'Email o contraseña incorrectos', 'error');
+    }
+}
+
+async function procesarRegistro(name, email, password) {
+    mostrarMensaje('registerMessage', 'Creando cuenta...', 'loading');
+    
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Verificar si el email ya existe
+    const usuarios = obtenerUsuarios();
+    const usuarioExistente = usuarios.find(u => u.email === email);
+    
+    if (usuarioExistente) {
+        mostrarMensaje('registerMessage', 'Este email ya está registrado', 'error');
+        return;
+    }
+    
+    // Crear nuevo usuario
+    const nuevoUsuario = {
+        id: Date.now().toString(),
+        name: name,
         email: email,
-        password: password
-      })
+        password: password,
+        createdAt: new Date().toISOString()
+    };
+    
+    usuarios.push(nuevoUsuario);
+    guardarUsuarios(usuarios);
+    
+    mostrarMensaje('registerMessage', '¡Cuenta creada exitosamente!', 'success');
+    
+    setTimeout(() => {
+        cerrarModal('registerModal');
+        abrirModal('loginModal');
+    }, 1500);
+}
+
+// ===== INTERFAZ DE USUARIO =====
+function verificarUsuarioLogueado() {
+    const usuarioGuardado = obtenerUsuarioActual();
+    
+    if (usuarioGuardado) {
+        try {
+            const usuario = JSON.parse(usuarioGuardado);
+            actualizarInterfazUsuario(usuario);
+        } catch (error) {
+            console.error("Error al parsear usuario:", error);
+            eliminarUsuarioActual();
+        }
+    }
+}
+
+function actualizarInterfazUsuario(usuario) {
+    const navAuth = document.querySelector('.nav-auth');
+    const userProfile = document.getElementById("userProfile");
+    const userName = document.getElementById("userName");
+    
+    if (navAuth) navAuth.style.display = 'none';
+    if (userProfile) userProfile.style.display = 'block';
+    if (userName) userName.textContent = usuario.name.split(' ')[0];
+    
+    console.log('Usuario logueado:', usuario.name);
+}
+
+function cerrarSesion() {
+    eliminarUsuarioActual();
+    
+    const navAuth = document.querySelector('.nav-auth');
+    const userProfile = document.getElementById("userProfile");
+    const userDropdown = document.getElementById("userDropdown");
+    
+    if (navAuth) navAuth.style.display = 'flex';
+    if (userProfile) userProfile.style.display = 'none';
+    if (userDropdown) userDropdown.classList.remove('show');
+    
+    console.log('Sesión cerrada');
+}
+
+// ===== FUNCIONALIDAD DE IDIOMA (tu código original) =====
+document.addEventListener("DOMContentLoaded", () => {
+    const lang = document.querySelector(".languaje");
+    if (!lang) return;
+    
+    const dropdown = lang.querySelector("ul");
+    const selected = lang.querySelector(".languaje-selected");
+
+    const translations = {
+        es: {
+            menuHome: "Inicio",
+            menuCourses: "Cursos",
+            menuHistory: "Historia de la Música",
+            menuTheory: "Teoría Musical",
+            searchPlaceholder: "Buscar cursos...",
+            btnLogin: "Iniciar Sesión",
+            btnSignup: "Crear Cuenta",
+            title: "Bienvenido a MSC STUDY, el lugar donde aprender música se convierte en una experiencia única",
+            description: "Explora clases interactivas, conoce la historia de la música y descubre cómo cada nota puede transformar tu forma de sentir y expresarte. ¡Empieza hoy tu viaje musical con nosotros!",
+            btnStart: "Comenzar Ahora",
+            coursesTitle: "Cursos Populares",
+            course1: "Instrumentos",
+            course2: "Teoría Musical",
+            course3: "Entrenamiento Vocal"
+        },
+        en: {
+            menuHome: "Home",
+            menuCourses: "Courses",
+            menuHistory: "Music History",
+            menuTheory: "Music Theory",
+            searchPlaceholder: "Search courses...",
+            btnLogin: "Login",
+            btnSignup: "Sign Up",
+            title: "Welcome to MSC STUDY, where learning music becomes a unique experience",
+            description: "Explore interactive lessons, learn about music history, and discover how every note can transform the way you feel and express yourself. Start your musical journey with us today!",
+            btnStart: "Start Now",
+            coursesTitle: "Popular Courses",
+            course1: "Instruments",
+            course2: "Music Theory",
+            course3: "Vocal Training"
+        },
+        pt: {
+            menuHome: "Início",
+            menuCourses: "Cursos",
+            menuHistory: "História da Música",
+            menuTheory: "Teoria Musical",
+            searchPlaceholder: "Procurar cursos...",
+            btnLogin: "Entrar",
+            btnSignup: "Criar Conta",
+            title: "Bem-vindo ao MSC STUDY, onde aprender música se torna uma experiência única",
+            description: "Explore aulas interativas, conheça a história da música e descubra como cada nota pode transformar sua forma de sentir e se expressar. Comece sua jornada musical hoje!",
+            btnStart: "Começar Agora",
+            coursesTitle: "Cursos Populares",
+            course1: "Instrumentos",
+            course2: "Teoria Musical",
+            course3: "Treinamento Vocal"
+        }
+    };
+
+    // Mostrar / ocultar menú
+    selected.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle("show");
     });
 
-    const data = await response.json();
+    document.addEventListener("click", () => {
+        dropdown.classList.remove("show");
+    });
 
-    if (response.ok) {
-      return data; // { success: true, user: {...}, token: '...' }
-    } else {
-      throw new Error(data.message || 'Error en el login');
-    }
-  } catch (error) {
-    throw new Error('Error de conexión: ' + error.message);
-  }
-}
+    // Cambiar idioma
+    lang.querySelectorAll("li").forEach((item) => {
+        item.addEventListener("click", (e) => {
+            e.preventDefault();
+            const flagUrl = item.getAttribute("data-flag");
+            const selectedLang = item.getAttribute("data-lang");
 
-  // Verificar si hay sesión guardada
-  function checkSavedLogin() {
-    const savedToken = localStorage.getItem('userToken') || sessionStorage.getItem('userToken');
-    const savedEmail = localStorage.getItem('userEmail');
-    
-    if (savedToken && savedEmail) {
-      // Auto-login o mostrar información del usuario
-      console.log('Usuario ya ha iniciado sesión:', savedEmail);
-      // Puedes redirigir automáticamente o mostrar un estado diferente
-    }
-  }
+            selected.innerHTML = `<span class="flag" style="background-image: url('${flagUrl}');"></span>`;
+            dropdown.classList.remove("show");
 
-  // Verificar al cargar la página
-  checkSavedLogin();
+            document.querySelectorAll("[data-translate]").forEach((el) => {
+                const key = el.getAttribute("data-translate");
+                el.textContent = translations[selectedLang][key];
+            });
+
+            // Cambiar placeholder
+            document.querySelectorAll("[data-translate-placeholder]").forEach((el) => {
+                const key = el.getAttribute("data-translate-placeholder");
+                el.placeholder = translations[selectedLang][key];
+            });
+        });
+    });
 });
-
-// Función global para abrir el modal desde otros lugares
-function openLogin() {
-  const loginModal = document.getElementById("loginModal");
-  if (loginModal) {
-    loginModal.style.display = "flex";
-    document.body.style.overflow = "hidden";
-  }
-}
-
-// Función global para cerrar el modal
-function closeLogin() {
-  const loginModal = document.getElementById("loginModal");
-  if (loginModal) {
-    loginModal.style.display = "none";
-    document.body.style.overflow = "auto";
-  }
-}
