@@ -450,7 +450,17 @@ function inicializarIdioma() {
             video11Desc: "Domina los conceptos de ritmo, tempo y compás.",
             video12Title: "Improvisación Musical",
             video12Desc: "Desarrolla habilidades para improvisar sobre progresiones de acordes.",
-            btnViewCourse: "Ver Curso"
+            btnViewCourse: "Ver Curso",
+            signup_titulo: "Crear Cuenta",
+            name_placeholder: "Nombre Completo",
+            confirm_password_placeholder: "Confirmar Contraseña",
+            boton_registrarse: "Crear Cuenta",
+            ya_tienes_cuenta: "¿Ya tienes cuenta?",
+            iniciar_sesion: "Iniciar Sesión",
+            mi_perfil: "Mi Perfil",
+            configuracion: "Configuración",
+            cerrar_sesion: "Cerrar Sesión",
+            backToHome: "Volver al Inicio"
         },
         en: {
             menuHome: "Home",
@@ -508,7 +518,7 @@ function inicializarIdioma() {
             menuTheory: "Teoria Musical",
             searchPlaceholder: "Procurar cursos...",
             btnLogin: "Entrar",
-            btnSignup: "Criar Conta",
+            btnSignup: "Cadastrar",
             title: "Bem-vindo ao MSC STUDY, onde aprender música se torna uma experiência única",
             description: "Explore aulas interativas, conheça a história da música e descubra como cada nota pode transformar sua forma de sentir e se expressar. Comece sua jornada musical hoje!",
             btnStart: "Começar Agora",
@@ -548,6 +558,17 @@ function inicializarIdioma() {
             video11Desc: "Domine os conceitos de ritmo, andamento e compasso.",
             video12Title: "Improvisação Musical",
             video12Desc: "Desenvolva habilidades para improvisar sobre progressões de acordes.",
+            btnViewCourse: "Ver Curso",
+            signup_titulo: "Criar Conta",
+            name_placeholder: "Nome Completo",
+            confirm_password_placeholder: "Confirmar Senha",
+            boton_registrarse: "Criar Conta",
+            ya_tienes_cuenta: "Já tem uma conta?",
+            iniciar_sesion: "Entrar",
+            mi_perfil: "Meu Perfil",
+            configuracion: "Configurações",
+            cerrar_sesion: "Sair",
+            backToHome: "Voltar ao Início"
             btnViewCourse: "Ver Curso"
         }
     };
@@ -588,6 +609,12 @@ function inicializarIdioma() {
                 }
             });
 
+            // Actualizar botón de volver si existe
+            const backButton = document.getElementById('historyBackButton');
+            if (backButton && translations[selectedLang].backToHome) {
+                backButton.innerHTML = `<i class="fas fa-arrow-left"></i> ${translations[selectedLang].backToHome}`;
+            }
+
             // Actualizar sección activa si hay una
             const activeSection = document.querySelector('.nav-link.active-section');
             if (activeSection && window.currentSection) {
@@ -602,6 +629,7 @@ function inicializarIdioma() {
 // ===== CONTENIDO DINÁMICO =====
 function inicializarContenidoDinamico() {
     const dynamicContent = document.getElementById("dynamic-content");
+    const historySection = document.getElementById("historySection");
     const navLinks = document.querySelectorAll(".nav-link");
     
     // Contenido para cada sección
@@ -638,8 +666,21 @@ function inicializarContenidoDinamico() {
         }
     };
 
+    // Función para obtener idioma actual
+    function getCurrentLanguage() {
+        const selectedFlag = document.querySelector('.languaje-selected .flag');
+        if (selectedFlag.style.backgroundImage.includes('ES')) return 'es';
+        if (selectedFlag.style.backgroundImage.includes('GB')) return 'en';
+        if (selectedFlag.style.backgroundImage.includes('BR')) return 'pt';
+        return 'es'; // default
+    }
+
     // Función para mostrar contenido de sección
     function showSection(section) {
+        // Ocultar sección de historia
+        historySection.style.display = "none";
+        historySection.classList.remove("active");
+        
         // Remover clase activa de todos los enlaces
         navLinks.forEach(link => {
             link.classList.remove("active-section");
@@ -699,6 +740,66 @@ function inicializarContenidoDinamico() {
         window.currentSection = section;
     }
 
+    // Función para mostrar la historia de la música
+    function showHistorySection() {
+        // Ocultar contenido dinámico normal
+        dynamicContent.style.display = "none";
+        dynamicContent.classList.remove("active");
+        
+        // Remover clase activa de todos los enlaces
+        navLinks.forEach(link => {
+            link.classList.remove("active-section");
+            link.classList.remove("active");
+        });
+        
+        // Marcar el enlace de historia como activo
+        document.querySelector('.nav-link[data-translate="menuHistory"]').classList.add("active-section");
+        
+        // Cargar el contenido de la historia
+        loadHistoryContent();
+        
+        // Mostrar sección de historia
+        historySection.style.display = "block";
+        setTimeout(() => {
+            historySection.classList.add("active");
+        }, 10);
+        
+        // Desplazar hacia la sección
+        historySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        // Guardar sección actual
+        window.currentSection = "history";
+    }
+
+    // Función para cargar el contenido de la historia
+    function loadHistoryContent() {
+        const historyContent = document.querySelector('.history-content');
+        
+        // Verificar si ya existe el botón de volver
+        if (!document.getElementById('historyBackButton')) {
+            // Obtener el idioma actual
+            const currentLang = getCurrentLanguage();
+            const backButtonText = window.translations[currentLang].backToHome;
+
+            // Crear botón de volver
+            const backButton = document.createElement('button');
+            backButton.id = 'historyBackButton';
+            backButton.className = 'back-button';
+            backButton.innerHTML = `<i class="fas fa-arrow-left"></i> ${backButtonText}`;
+            backButton.onclick = function(e) {
+                e.preventDefault();
+                showSection('home');
+            };
+
+            // Insertar el botón al principio del contenido
+            historyContent.insertBefore(backButton, historyContent.firstChild);
+        }
+    }
+
+    // Hacer las funciones globales para que puedan ser llamadas desde el HTML
+    window.showSection = showSection;
+    window.showHistorySection = showHistorySection;
+
     // Event listeners para los enlaces del menú
     navLinks.forEach(link => {
         link.addEventListener("click", (e) => {
@@ -711,7 +812,9 @@ function inicializarContenidoDinamico() {
             if (section === "menuCourses") {
                 sectionKey = "courses";
             } else if (section === "menuHistory") {
-                sectionKey = "history";
+                // Mostrar sección especial de historia
+                showHistorySection();
+                return;
             } else if (section === "menuTheory") {
                 sectionKey = "theory";
             } else if (section === "menuHome") {
@@ -727,13 +830,17 @@ function inicializarContenidoDinamico() {
             }
         });
     });
+}
 
-    // Función auxiliar para obtener idioma actual
-    function getCurrentLanguage() {
-        const selectedFlag = document.querySelector('.languaje-selected .flag');
-        if (selectedFlag.style.backgroundImage.includes('ES')) return 'es';
-        if (selectedFlag.style.backgroundImage.includes('GB')) return 'en';
-        if (selectedFlag.style.backgroundImage.includes('BR')) return 'pt';
-        return 'es'; // default
-    }
+// Logo click para recargar la página
+const navLogo = document.querySelector('.nav-logo');
+if (navLogo) {
+    navLogo.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log("Logo clickeado - recargando página");
+        location.reload();
+    });
+    
+    // Agregar estilo de cursor pointer
+    navLogo.style.cursor = 'pointer';
 }
