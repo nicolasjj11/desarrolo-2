@@ -6,7 +6,11 @@ document.addEventListener("DOMContentLoaded", function() {
     inicializarModales();
     inicializarEventListeners();
     verificarUsuarioLogueado();
-    inicializarIdioma();
+    const translations = inicializarIdioma();
+    inicializarContenidoDinamico();
+    
+    // Hacer disponible globalmente para las funciones
+    window.translations = translations;
 });
 
 function inicializarModales() {
@@ -397,6 +401,7 @@ function inicializarIdioma() {
     const dropdown = lang.querySelector("ul");
     const selected = lang.querySelector(".languaje-selected");
 
+    // Traducciones actualizadas con el nuevo contenido
     const translations = {
         es: {
             menuHome: "Inicio",
@@ -414,7 +419,38 @@ function inicializarIdioma() {
             course2: "Instrumentos de Cuerda",
             course3: "Piano & Teclados",
             course4: "Percusión",
-            course5: "Teoría Musical"
+            course5: "Teoría Musical",
+            coursesSectionTitle: "Explora Nuestros Cursos",
+            coursesSectionDescription: "Sumérgete en el mundo de la música con nuestra amplia variedad de cursos diseñados para todos los niveles. Desde principiantes hasta músicos avanzados, tenemos algo para todos.",
+            historySectionTitle: "Historia de la Música", 
+            historySectionDescription: "Viaja a través del tiempo y descubre cómo la música ha evolucionado a lo largo de los siglos, desde las primeras civilizaciones hasta la era moderna.",
+            theorySectionTitle: "Teoría Musical",
+            theorySectionDescription: "Domina el lenguaje universal de la música. Aprende sobre escalas, acordes, armonía y ritmo para llevar tu comprensión musical al siguiente nivel.",
+            video1Title: "Introducción a la Teoría Musical",
+            video1Desc: "Aprende los fundamentos de la teoría musical en este curso introductorio.",
+            video2Title: "Técnicas de Guitarra para Principiantes",
+            video2Desc: "Domina los acordes básicos y técnicas esenciales para tocar guitarra.",
+            video3Title: "Fundamentos del Piano",
+            video3Desc: "Comienza tu viaje con el piano aprendiendo las notas y escalas básicas.",
+            video4Title: "Historia de la Música Clásica", 
+            video4Desc: "Descubre los compositores y obras que definieron la música clásica.",
+            video5Title: "Música en la Antigua Grecia",
+            video5Desc: "Explora el papel de la música en la sociedad griega antigua.",
+            video6Title: "El Renacimiento Musical",
+            video6Desc: "Descubre cómo el Renacimiento transformó la composición musical.",
+            video7Title: "La Era del Barroco",
+            video7Desc: "Conoce a los grandes compositores del período barroco.",
+            video8Title: "Música del Siglo XX",
+            video8Desc: "Analiza las revoluciones musicales del siglo pasado.",
+            video9Title: "Lectura de Partituras",
+            video9Desc: "Aprende a leer y entender partituras musicales.",
+            video10Title: "Armonía Básica",
+            video10Desc: "Comprende los principios fundamentales de la armonía musical.",
+            video11Title: "Ritmo y Compás",
+            video11Desc: "Domina los conceptos de ritmo, tempo y compás.",
+            video12Title: "Improvisación Musical",
+            video12Desc: "Desarrolla habilidades para improvisar sobre progresiones de acordes.",
+            btnViewCourse: "Ver Curso"
         },
         en: {
             menuHome: "Home",
@@ -432,7 +468,38 @@ function inicializarIdioma() {
             course2: "String Instruments",
             course3: "Piano & Keyboards",
             course4: "Percussion",
-            course5: "Music Theory"
+            course5: "Music Theory",
+            coursesSectionTitle: "Explore Our Courses",
+            coursesSectionDescription: "Dive into the world of music with our wide variety of courses designed for all levels. From beginners to advanced musicians, we have something for everyone.",
+            historySectionTitle: "Music History",
+            historySectionDescription: "Travel through time and discover how music has evolved over the centuries, from the earliest civilizations to the modern era.",
+            theorySectionTitle: "Music Theory", 
+            theorySectionDescription: "Master the universal language of music. Learn about scales, chords, harmony, and rhythm to take your musical understanding to the next level.",
+            video1Title: "Introduction to Music Theory",
+            video1Desc: "Learn the fundamentals of music theory in this introductory course.",
+            video2Title: "Guitar Techniques for Beginners",
+            video2Desc: "Master basic chords and essential techniques for playing guitar.",
+            video3Title: "Piano Fundamentals",
+            video3Desc: "Start your piano journey by learning basic notes and scales.",
+            video4Title: "History of Classical Music",
+            video4Desc: "Discover the composers and works that defined classical music.",
+            video5Title: "Music in Ancient Greece", 
+            video5Desc: "Explore the role of music in ancient Greek society.",
+            video6Title: "The Musical Renaissance",
+            video6Desc: "Discover how the Renaissance transformed musical composition.",
+            video7Title: "The Baroque Era",
+            video7Desc: "Meet the great composers of the Baroque period.",
+            video8Title: "20th Century Music",
+            video8Desc: "Analyze the musical revolutions of the last century.",
+            video9Title: "Sheet Music Reading",
+            video9Desc: "Learn to read and understand sheet music.",
+            video10Title: "Basic Harmony",
+            video10Desc: "Understand the fundamental principles of musical harmony.",
+            video11Title: "Rhythm and Time",
+            video11Desc: "Master the concepts of rhythm, tempo, and time signatures.",
+            video12Title: "Musical Improvisation",
+            video12Desc: "Develop skills to improvise over chord progressions.",
+            btnViewCourse: "View Course"
         },
         pt: {
             menuHome: "Início",
@@ -450,7 +517,38 @@ function inicializarIdioma() {
             course2: "Instrumentos de Corda",
             course3: "Piano & Teclados",
             course4: "Percussão",
-            course5: "Teoria Musical"
+            course5: "Teoria Musical",
+            coursesSectionTitle: "Explore Nossos Cursos",
+            coursesSectionDescription: "Mergulhe no mundo da música com nossa ampla variedade de cursos projetados para todos os níveis. De iniciantes a músicos avançados, temos algo para todos.",
+            historySectionTitle: "História da Música",
+            historySectionDescription: "Viaje através do tempo e descubra como a música evoluiu ao longo dos séculos, desde as primeiras civilizações até a era moderna.",
+            theorySectionTitle: "Teoria Musical",
+            theorySectionDescription: "Domine a linguagem universal da música. Aprenda sobre escalas, acordes, harmonia e ritmo para levar sua compreensão musical ao próximo nível.",
+            video1Title: "Introdução à Teoria Musical",
+            video1Desc: "Aprenda os fundamentos da teoria musical neste curso introdutório.",
+            video2Title: "Técnicas de Guitarra para Iniciantes", 
+            video2Desc: "Domine acordes básicos e técnicas essenciais para tocar guitarra.",
+            video3Title: "Fundamentos do Piano",
+            video3Desc: "Comece sua jornada com o piano aprendendo notas e escalas básicas.",
+            video4Title: "História da Música Clássica",
+            video4Desc: "Descubra os compositores e obras que definiram a música clássica.",
+            video5Title: "Música na Grécia Antiga",
+            video5Desc: "Explore o papel da música na sociedade grega antiga.",
+            video6Title: "O Renascimento Musical",
+            video6Desc: "Descubra como o Renascimento transformou a composição musical.",
+            video7Title: "A Era do Barroco",
+            video7Desc: "Conheça os grandes compositores do período barroco.",
+            video8Title: "Música do Século XX",
+            video8Desc: "Analise as revoluções musicais do século passado.",
+            video9Title: "Leitura de Partituras",
+            video9Desc: "Aprenda a ler e entender partituras musicais.",
+            video10Title: "Harmonia Básica",
+            video10Desc: "Compreenda os princípios fundamentais da harmonia musical.",
+            video11Title: "Ritmo e Compasso",
+            video11Desc: "Domine os conceitos de ritmo, andamento e compasso.",
+            video12Title: "Improvisação Musical",
+            video12Desc: "Desenvolva habilidades para improvisar sobre progressões de acordes.",
+            btnViewCourse: "Ver Curso"
         }
     };
 
@@ -474,6 +572,7 @@ function inicializarIdioma() {
             selected.innerHTML = `<span class="flag" style="background-image: url('${flagUrl}');"></span>`;
             dropdown.classList.remove("show");
 
+            // Actualizar textos estáticos
             document.querySelectorAll("[data-translate]").forEach((el) => {
                 const key = el.getAttribute("data-translate");
                 if (translations[selectedLang][key]) {
@@ -488,6 +587,153 @@ function inicializarIdioma() {
                     el.placeholder = translations[selectedLang][key];
                 }
             });
+
+            // Actualizar sección activa si hay una
+            const activeSection = document.querySelector('.nav-link.active-section');
+            if (activeSection && window.currentSection) {
+                showSection(window.currentSection);
+            }
         });
     });
+
+    return translations;
+}
+
+// ===== CONTENIDO DINÁMICO =====
+function inicializarContenidoDinamico() {
+    const dynamicContent = document.getElementById("dynamic-content");
+    const navLinks = document.querySelectorAll(".nav-link");
+    
+    // Contenido para cada sección
+    const sectionContent = {
+        courses: {
+            titleKey: "coursesSectionTitle",
+            descriptionKey: "coursesSectionDescription",
+            videos: [
+                { titleKey: "video1Title", descriptionKey: "video1Desc", icon: "🎼" },
+                { titleKey: "video2Title", descriptionKey: "video2Desc", icon: "🎸" },
+                { titleKey: "video3Title", descriptionKey: "video3Desc", icon: "🎹" },
+                { titleKey: "video4Title", descriptionKey: "video4Desc", icon: "🎵" }
+            ]
+        },
+        history: {
+            titleKey: "historySectionTitle", 
+            descriptionKey: "historySectionDescription",
+            videos: [
+                { titleKey: "video5Title", descriptionKey: "video5Desc", icon: "🏛️" },
+                { titleKey: "video6Title", descriptionKey: "video6Desc", icon: "🎨" },
+                { titleKey: "video7Title", descriptionKey: "video7Desc", icon: "🎻" },
+                { titleKey: "video8Title", descriptionKey: "video8Desc", icon: "📻" }
+            ]
+        },
+        theory: {
+            titleKey: "theorySectionTitle",
+            descriptionKey: "theorySectionDescription",
+            videos: [
+                { titleKey: "video9Title", descriptionKey: "video9Desc", icon: "📜" },
+                { titleKey: "video10Title", descriptionKey: "video10Desc", icon: "🎶" },
+                { titleKey: "video11Title", descriptionKey: "video11Desc", icon: "🥁" },
+                { titleKey: "video12Title", descriptionKey: "video12Desc", icon: "🎹" }
+            ]
+        }
+    };
+
+    // Función para mostrar contenido de sección
+    function showSection(section) {
+        // Remover clase activa de todos los enlaces
+        navLinks.forEach(link => {
+            link.classList.remove("active-section");
+            link.classList.remove("active");
+        });
+        
+        // Si es la página de inicio, ocultar el contenido dinámico
+        if (section === "home") {
+            dynamicContent.style.display = "none";
+            document.querySelector('.nav-link[data-translate="menuHome"]').classList.add("active");
+            return;
+        }
+        
+        // Obtener el idioma actual
+        const currentLang = getCurrentLanguage();
+        const content = sectionContent[section];
+        const currentTranslations = window.translations[currentLang];
+        
+        // Construir HTML del contenido
+        let videosHTML = '';
+        content.videos.forEach(video => {
+            videosHTML += `
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        ${video.icon}
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">${currentTranslations[video.titleKey]}</h3>
+                        <p class="video-description">${currentTranslations[video.descriptionKey]}</p>
+                        <a href="#" class="video-link">${currentTranslations.btnViewCourse}</a>
+                    </div>
+                </div>
+            `;
+        });
+        
+        // Insertar contenido en el contenedor
+        dynamicContent.innerHTML = `
+            <div class="content-header">
+                <h2 class="content-title">${currentTranslations[content.titleKey]}</h2>
+                <p class="content-description">${currentTranslations[content.descriptionKey]}</p>
+            </div>
+            <div class="video-grid">
+                ${videosHTML}
+            </div>
+        `;
+        
+        // Mostrar contenido con animación
+        dynamicContent.style.display = "block";
+        setTimeout(() => {
+            dynamicContent.classList.add("active");
+        }, 10);
+        
+        // Desplazar hacia la sección
+        dynamicContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        // Guardar sección actual
+        window.currentSection = section;
+    }
+
+    // Event listeners para los enlaces del menú
+    navLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            
+            const section = link.getAttribute("data-translate");
+            let sectionKey = "";
+            
+            // Determinar qué sección mostrar según el enlace clickeado
+            if (section === "menuCourses") {
+                sectionKey = "courses";
+            } else if (section === "menuHistory") {
+                sectionKey = "history";
+            } else if (section === "menuTheory") {
+                sectionKey = "theory";
+            } else if (section === "menuHome") {
+                sectionKey = "home";
+            }
+            
+            // Mostrar la sección correspondiente
+            if (sectionKey) {
+                showSection(sectionKey);
+                
+                // Marcar enlace como activo
+                link.classList.add("active-section");
+            }
+        });
+    });
+
+    // Función auxiliar para obtener idioma actual
+    function getCurrentLanguage() {
+        const selectedFlag = document.querySelector('.languaje-selected .flag');
+        if (selectedFlag.style.backgroundImage.includes('ES')) return 'es';
+        if (selectedFlag.style.backgroundImage.includes('GB')) return 'en';
+        if (selectedFlag.style.backgroundImage.includes('BR')) return 'pt';
+        return 'es'; // default
+    }
 }
