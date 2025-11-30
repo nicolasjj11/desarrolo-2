@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // ===== INICIALIZACIÓN =====
     inicializarModales();
     inicializarEventListeners();
+    inicializarMenuHamburguesa(); // ✅ NUEVA FUNCIÓN AGREGADA
     verificarUsuarioLogueado();
     const translations = inicializarIdioma();
     inicializarContenidoDinamico();
@@ -602,6 +603,7 @@ function inicializarIdioma() {
 // ===== CONTENIDO DINÁMICO =====
 function inicializarContenidoDinamico() {
     const dynamicContent = document.getElementById("dynamic-content");
+    const historySection = document.getElementById("historySection");
     const navLinks = document.querySelectorAll(".nav-link");
     
     // Contenido para cada sección
@@ -638,8 +640,12 @@ function inicializarContenidoDinamico() {
         }
     };
 
-    // Función para mostrar contenido de sección
+    // Función para mostrar contenido de sección normal
     function showSection(section) {
+        // Ocultar sección de historia primero
+        historySection.style.display = "none";
+        historySection.classList.remove("active");
+        
         // Remover clase activa de todos los enlaces
         navLinks.forEach(link => {
             link.classList.remove("active-section");
@@ -699,6 +705,375 @@ function inicializarContenidoDinamico() {
         window.currentSection = section;
     }
 
+    // Función para mostrar la historia de la música
+    function showHistorySection() {
+        // Ocultar contenido dinámico normal
+        dynamicContent.style.display = "none";
+        dynamicContent.classList.remove("active");
+        
+        // Remover clase activa de todos los enlaces
+        navLinks.forEach(link => {
+            link.classList.remove("active-section");
+            link.classList.remove("active");
+        });
+        
+        // Marcar el enlace de historia como activo
+        document.querySelector('.nav-link[data-translate="menuHistory"]').classList.add("active-section");
+        
+        // Cargar el contenido de la historia
+        loadHistoryContent();
+        
+        // Mostrar sección de historia
+        historySection.style.display = "block";
+        setTimeout(() => {
+            historySection.classList.add("active");
+        }, 10);
+        
+        // Desplazar hacia la sección
+        historySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        // Guardar sección actual
+        window.currentSection = "history";
+    }
+
+    // Función para cargar el contenido de la historia
+    function loadHistoryContent() {
+        const historyContent = document.querySelector('.history-content');
+        
+        // Aquí insertamos el contenido del documento que proporcionaste
+        historyContent.innerHTML = `
+            <button class="back-button" onclick="showSection('home')">
+                <i class="fas fa-arrow-left"></i> Volver al Inicio
+            </button>
+            <div class="history-document">
+                <h1>La Historia de la Música: Origen, Evolución y su Importancia para los Seres Humanos</h1>
+                
+                <p>La música es una de las expresiones culturales más antiguas y universales de la humanidad. Acompaña al ser humano desde sus inicios y ha sido un puente para comunicar emociones, transmitir historias y unir comunidades. Aunque resulta imposible determinar un año exacto de su origen, los arqueólogos estiman que la música <strong>surgió hace más de 40.000 años</strong>, cuando nuestros ancestros comenzaron a utilizar objetos como huesos, piedras o madera para producir sonidos rítmicos.</p>
+
+                <p>A lo largo de los siglos, la música evolucionó, acompañando los cambios sociales, culturales y tecnológicos de cada civilización. Desde los cantos rituales de las primeras culturas, pasando por la música clásica europea, hasta los géneros urbanos actuales, la música siempre ha sido una forma poderosa de expresión humana.</p>
+
+                <h2>🎼 Pilares fundamentales en la historia de la música</h2>
+                <p>A través del tiempo, numerosos personajes y culturas marcaron el desarrollo musical. Algunos pilares destacados son:</p>
+
+                <h3>1. Las antiguas civilizaciones</h3>
+                <ul>
+                    <li><strong>Mesopotamia, Egipto, Grecia y Roma</strong> utilizaron la música en rituales, celebraciones y teatro.</li>
+                    <li>Los griegos fueron los primeros en estudiar la música como ciencia; Pitágoras investigó las relaciones matemáticas del sonido.</li>
+                </ul>
+
+                <h3>2. La música medieval y renacentista</h3>
+                <ul>
+                    <li>Nacen los <strong>cantos gregorianos</strong> y la música sacra europea.</li>
+                    <li>Se desarrollan las bases de la armonía y la notación musical.</li>
+                </ul>
+
+                <h3>3. La música clásica</h3>
+                <p>Compositores como:</p>
+                <ul>
+                    <li><strong>Johann Sebastian Bach</strong></li>
+                    <li><strong>Wolfgang Amadeus Mozart</strong></li>
+                    <li><strong>Ludwig van Beethoven</strong></li>
+                </ul>
+                <p>Ellos revolucionaron la música occidental y sentaron las bases de las orquestas, sinfonías y conciertos como los conocemos hoy.</p>
+
+                <h3>4. La música moderna</h3>
+                <p>Con la llegada de la tecnología del siglo XX surgieron:</p>
+                <ul>
+                    <li>El jazz</li>
+                    <li>El rock</li>
+                    <li>La música pop</li>
+                    <li>La música electrónica</li>
+                    <li>Los géneros urbanos</li>
+                </ul>
+                <p>Artistas como <strong>The Beatles, Michael Jackson y Elvis Presley</strong> marcaron épocas completas.</p>
+
+                <h2>🌎 La música como idioma universal y su influencia en la vida humana</h2>
+                <p>La música es considerada un <strong>lenguaje universal</strong>, porque transmite emociones sin necesidad de palabras. Nos conecta, nos acompaña y tiene un impacto profundo en diversas áreas:</p>
+
+                <h3>✔ Desarrollo emocional</h3>
+                <ul>
+                    <li>Ayuda a manejar el estrés y la tristeza.</li>
+                    <li>Aumenta la felicidad, la motivación y la energía.</li>
+                    <li>Permite expresar lo que a veces no se puede decir con palabras.</li>
+                </ul>
+
+                <h3>✔ Desarrollo cognitivo y motriz</h3>
+                <ul>
+                    <li>Mejora la concentración, la memoria y la creatividad.</li>
+                    <li>En niños, fortalece la coordinación, el ritmo y la motricidad fina.</li>
+                    <li>En músicos, entrenar un instrumento estimula ambos hemisferios del cerebro.</li>
+                </ul>
+
+                <h3>✔ Sentido de identidad y cultura</h3>
+                <ul>
+                    <li>La música representa un país, una región o una comunidad.</li>
+                    <li>Transmite costumbres, historias y valores.</li>
+                </ul>
+
+                <h3>✔ Bienestar personal</h3>
+                <p>Para quienes interpretan un instrumento o cantan, la música:</p>
+                <ul>
+                    <li>Sirve como escape de la rutina.</li>
+                    <li>Ayuda a superar momentos difíciles.</li>
+                    <li>Aporta tranquilidad, disciplina y equilibrio emocional.</li>
+                </ul>
+
+                <h3>✔ Une a las personas</h3>
+                <p>La música crea comunidades. Cualquiera puede unirse a una canción, a un grupo o a una experiencia musical.</p>
+                <p>🎤 Cantamos juntos<br>
+                🎶 Bailamos juntos<br>
+                🥁 Sentimos juntos</p>
+                <p>Es una herramienta poderosa para conectar con otros, sin importar edad o idioma.</p>
+
+                <h2>🎶 Géneros musicales populares en Latinoamérica y sus artistas más icónicos</h2>
+                <p>Latinoamérica es una región rica en diversidad musical. Cada país aporta estilos únicos que han trascendido fronteras.</p>
+
+                <h3>1. Reggaetón (Puerto Rico)</h3>
+                <p><strong>Importancia:</strong> Género urbano que revolucionó la música mundial desde los 90.<br>
+                <strong>Artistas icónicos:</strong> Daddy Yankee, Don Omar, Bad Bunny.<br>
+                <strong>Canciones legendarias:</strong> "Gasolina", "Danza Kuduro".</p>
+
+                <h3>2. Salsa (Cuba, Puerto Rico y Colombia)</h3>
+                <p><strong>Importancia:</strong> Representa alegría, sabor y tradición caribeña.<br>
+                <strong>Artistas icónicos:</strong> Celia Cruz, Héctor Lavoe, Grupo Niche.<br>
+                <strong>Canciones destacadas:</strong> "Quimbara", "Rebelión", "Cali Pachanguero".</p>
+
+                <h3>3. Cumbia (Colombia)</h3>
+                <p><strong>Importancia:</strong> Símbolo musical colombiano, se expandió a México, Argentina y Perú.<br>
+                <strong>Artistas icónicos:</strong> Totó la Momposina, Aniceto Molina, Los Ángeles Azules (versión mexicana).<br>
+                <strong>Canciones destacadas:</strong> "La pollera colorá", "Cómo te voy a olvidar".</p>
+
+                <h3>4. Vallenato (Colombia)</h3>
+                <p><strong>Importancia:</strong> Música tradicional con acordeón que narra historias y vivencias.<br>
+                <strong>Artistas icónicos:</strong> Diomedes Díaz, Carlos Vives, Jorge Celedón.<br>
+                <strong>Canciones:</strong> "La Gota Fría", "Obsesión".</p>
+
+                <h3>5. Tango (Argentina)</h3>
+                <p><strong>Importancia:</strong> Símbolo cultural argentino; mezcla de melancolía y pasión.<br>
+                <strong>Artistas icónicos:</strong> Carlos Gardel, Astor Piazzolla.<br>
+                <strong>Canciones:</strong> "Por una cabeza", "Libertango".</p>
+
+                <h3>6. Rock Latino (México, Argentina, Chile)</h3>
+                <p><strong>Importancia:</strong> Revolución musical desde los 80 y 90.<br>
+                <strong>Artistas:</strong> Soda Stereo, Maná, Café Tacvba.<br>
+                <strong>Canciones:</strong> "De música ligera", "Rayando el sol".</p>
+
+                <h3>7. Música Andina (Bolivia, Perú, Ecuador)</h3>
+                <p><strong>Importancia:</strong> Sonidos ancestrales con quena, zampoña y charango.<br>
+                <strong>Canciones y artistas:</strong> Los Kjarkas, Savia Andina ("Llorando se fue").</p>
+
+                <h3>8. Bachata y Merengue (República Dominicana)</h3>
+                <p><strong>Importancia:</strong> Ritmos tropicales que dominan fiestas y celebraciones.<br>
+                <strong>Artistas:</strong> Juan Luis Guerra, Romeo Santos.<br>
+                <strong>Canciones:</strong> "Bachata en Fukuoka", "Eres Mía".</p>
+
+                <h2>💛 ¿Por qué la música transforma vidas?</h2>
+                <p>La música tiene un poder especial: <strong>conecta el alma con las emociones</strong>, nos motiva y nos da compañía incluso en los momentos más difíciles. Para quienes la interpretan, tocar un instrumento o cantar puede significar:</p>
+                <ul>
+                    <li>Salir de la rutina</li>
+                    <li>Encontrar paz mental</li>
+                    <li>Mantenerse enfocado</li>
+                    <li>Mejorar la disciplina y la paciencia</li>
+                    <li>Sentirse acompañado aun en momentos de silencio</li>
+                </ul>
+                <p>La música nos recuerda que nunca estamos solos. Cada melodía, cada ritmo y cada canción puede convertirse en un refugio, una terapia o una inspiración.</p>
+
+                <h1>Un camino musical para cualquier persona</h1>
+                <p>No importa si nunca has tocado un instrumento o si llevas años haciéndolo.<br>
+                La música siempre tiene un lugar para ti.</p>
+
+                <h2>🚀 Si estás comenzando</h2>
+                <p>Puedes iniciar con:<br>
+                🎹 teclado<br>
+                🎸 guitarra<br>
+                🥁 percusión básica</p>
+
+                <p>La música es un regalo universal.<br>
+                No importa la edad, la experiencia o el país.<br>
+                Lo único que importa es <strong>sentirla</strong>, dejarse llevar por sus ritmos y permitir que transforme nuestra vida.</p>
+
+                <p><strong>La música une, inspira, sana y acompaña.<br>
+                Y lo más hermoso es que siempre está lista para cualquiera que quiera escucharla o interpretarla.</strong> 🎶💫</p>
+
+                <h1>🎺🌬️ Instrumentos de Viento: La Voz del Aire en la Música</h1>
+
+                <p>Los <strong>instrumentos de viento</strong> son aquellos que producen sonido gracias a la <strong>vibración del aire</strong> dentro de un tubo. No importa si son de metal o madera: su magia está en el control del aire, la respiración, la embocadura y la técnica del intérprete.</p>
+
+                <p>Estos instrumentos son fundamentales en bandas sinfónicas, orquestas, grupos populares, jazz, música latina y bandas marciales. A continuación, te presento sus familias más importantes y sus características principales.</p>
+
+                <h2>🥇 1. Instrumentos de Viento-Metal o Bronces</h2>
+                <p>Aunque su nombre indica "metal", lo que realmente define a estos instrumentos es <strong>la vibración de los labios del músico en la boquilla</strong>. De esa vibración nace el sonido, que luego viaja por el tubo del instrumento.</p>
+
+                <p>Son conocidos por su <strong>fuerza, brillo, potencia y presencia</strong> en cualquier agrupación.</p>
+
+                <h3>🎺 Trompeta</h3>
+                <ul>
+                    <li><strong>Tono:</strong> brillante, agudo, enérgico.</li>
+                    <li><strong>Material:</strong> latón.</li>
+                    <li><strong>Uso:</strong> salsa, jazz, orquesta sinfónica, banda marcial, música popular.</li>
+                    <li><strong>Características:</strong>
+                        <ul>
+                            <li>Tiene tres pistones.</li>
+                            <li>Es uno de los instrumentos más versátiles.</li>
+                            <li>Ideal para melodías protagonistas.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Intérpretes icónicos:</strong> Miles Davis, Louis Armstrong, Arturo Sandoval.</li>
+                </ul>
+
+                <h3>🎺🎶 Corneta y Cornetín</h3>
+                <ul>
+                    <li>Muy usados en bandas marciales y procesionales.</li>
+                    <li>Parecidos a la trompeta, pero más pequeños y con un sonido más suave.</li>
+                </ul>
+
+                <h3>📯 Bombardino (Euphonium)</h3>
+                <ul>
+                    <li><strong>Tono:</strong> cálido, suave y profundo.</li>
+                    <li><strong>Uso:</strong> bandas sinfónicas y marciales.</li>
+                    <li><strong>Características:</strong>
+                        <ul>
+                            <li>Tiene 3 o 4 pistones.</li>
+                            <li>Excelente para solos melódicos.</li>
+                        </ul>
+                    </li>
+                    <li>Muy querido por su sonido dulce y expresivo.</li>
+                </ul>
+
+                <h3>🎶 Trombón</h3>
+                <ul>
+                    <li><strong>Tono:</strong> poderoso y flexible.</li>
+                    <li><strong>Uso:</strong> jazz, salsa, bandas, orquestas.</li>
+                    <li><strong>Características:</strong>
+                        <ul>
+                            <li>No usa pistones: usa una <strong>vara</strong> móvil.</li>
+                            <li>Gran capacidad expresiva.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Artistas icónicos:</strong> Willie Colón, Glenn Miller.</li>
+                </ul>
+
+                <h3>🎵 Tuba</h3>
+                <ul>
+                    <li><strong>El más grave de los metales</strong>.</li>
+                    <li><strong>Uso:</strong> orquestas, bandas sinfónicas, música cinematográfica.</li>
+                    <li><strong>Características:</strong>
+                        <ul>
+                            <li>Sonido profundo, base armónica de la agrupación.</li>
+                            <li>Puede tener 3 a 5 pistones.</li>
+                        </ul>
+                    </li>
+                    <li>Es el "corazón" de muchas bandas.</li>
+                </ul>
+
+                <h2>🪵 2. Instrumentos de Madera</h2>
+                <p>Aquí, el sonido se produce por <strong>vibración de una caña (lengüeta)</strong> o por el <strong>aire al pasar por los orificios del instrumento</strong>. Antes eran todos de madera, pero hoy algunos son de metal o plástico, aunque siguen perteneciendo a esta familia por su forma de producir sonido.</p>
+
+                <p>Estos instrumentos tienen sonidos <strong>más suaves, cálidos, melódicos o expresivos</strong>.</p>
+
+                <h3>🎷 Saxofón</h3>
+                <p>Aunque está hecho de metal, pertenece a la familia de las <strong>maderas</strong> porque usa una <strong>lengüeta de caña simple</strong>.</p>
+                <ul>
+                    <li><strong>Tono:</strong> cálido, expresivo y muy versátil.</li>
+                    <li><strong>Tipos:</strong> soprano, alto, tenor, barítono.</li>
+                    <li><strong>Uso:</strong> jazz, salsa, pop, bandas sinfónicas.</li>
+                    <li><strong>Artistas icónicos:</strong> Charlie Parker, Kenny G.</li>
+                </ul>
+
+                <h3>🎼 Clarinete</h3>
+                <ul>
+                    <li><strong>Tono:</strong> dulce, flexible y capaz de tocar muchos registros.</li>
+                    <li><strong>Material:</strong> madera (generalmente ébano).</li>
+                    <li><strong>Características:</strong>
+                        <ul>
+                            <li>Usa una lengüeta simple.</li>
+                            <li>Tiene una gran extensión sonora.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Uso:</strong> orquesta, banda sinfónica, jazz, folclor.</li>
+                    <li>Muy expresivo y técnico.</li>
+                </ul>
+
+                <h3>🎶 Flauta Traversa</h3>
+                <ul>
+                    <li><strong>Material:</strong> metal o plata, pero pertenece a maderas por su origen histórico.</li>
+                    <li><strong>Tono:</strong> brillante, suave, ágil.</li>
+                    <li><strong>Uso:</strong> orquestas, música latina, estudios, jazz.</li>
+                    <li><strong>Características:</strong>
+                        <ul>
+                            <li>Sonido producido por soplar sobre un orificio.</li>
+                            <li>Muy virtuosa para melodías rápidas.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>🪈 Oboe</h3>
+                <ul>
+                    <li><strong>Sonido:</strong> muy expresivo, con una calidad "penetrante y dulce".</li>
+                    <li><strong>Uso:</strong> orquestas, música clásica.</li>
+                    <li><strong>Característica más famosa:</strong>
+                        <ul>
+                            <li>Da el <strong>La</strong> para afinar la orquesta.</li>
+                            <li>Usa una <strong>doble lengüeta</strong>.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>🎵 Fagot</h3>
+                <ul>
+                    <li><strong>Tono:</strong> grave, profundo y lleno de carácter.</li>
+                    <li><strong>Uso:</strong> orquestas sinfónicas, banda sinfónica.</li>
+                    <li><strong>Características:</strong>
+                        <ul>
+                            <li>Doble lengüeta.</li>
+                            <li>Gran tamaño y sonido cálido.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h2>🌬️ ¿Por qué los instrumentos de viento son tan importantes?</h2>
+
+                <h3>💨 1. Desarrollo de técnica respiratoria</h3>
+                <p>Aprender a controlar el aire mejora:<br>
+                ✔ capacidad pulmonar<br>
+                ✔ salud respiratoria<br>
+                ✔ fuerza del diafragma<br>
+                ✔ resistencia física</p>
+
+                <h3>😌 2. Mejoran la concentración y disciplina</h3>
+                <p>Son instrumentos que requieren técnica, constancia y enfoque.</p>
+
+                <h3>🎶 3. Son protagonistas en muchos géneros</h3>
+                <p>Desde música clásica hasta salsa, merengue, jazz, pop y bandas marciales.</p>
+
+                <h3>❤️ 4. Ayudan emocionalmente</h3>
+                <p>Tocar un instrumento de viento puede ser una excelente terapia:</p>
+                <ul>
+                    <li>libera tensión</li>
+                    <li>relaja la mente</li>
+                    <li>expresa emociones profundas</li>
+                </ul>
+
+                <h3>🌎 5. Son parte fundamental de la cultura latinoamericana</h3>
+                <p>Las bandas de viento son representación de alegría, tradición y celebración.</p>
+
+                <p>Los instrumentos de viento son una combinación perfecta de <strong>técnica, expresión y emoción</strong>.<br>
+                Ya sea que elijas una trompeta que brille en lo alto 🎺, un trombón poderoso 🎶, un saxofón lleno de estilo 🎷 o un clarinete elegante 🎼... cada uno tiene una voz única preparada para contar historias.</p>
+
+                <p>La música de viento invita a cualquier persona ---niños, jóvenes o adultos--- a descubrir un mundo lleno de sonidos, cultura y pasión.</p>
+            </div>
+        `;
+    }
+
+    // Función auxiliar para obtener idioma actual
+    function getCurrentLanguage() {
+        const selectedFlag = document.querySelector('.languaje-selected .flag');
+        if (selectedFlag.style.backgroundImage.includes('ES')) return 'es';
+        if (selectedFlag.style.backgroundImage.includes('GB')) return 'en';
+        if (selectedFlag.style.backgroundImage.includes('BR')) return 'pt';
+        return 'es'; // default
+    }
+
     // Event listeners para los enlaces del menú
     navLinks.forEach(link => {
         link.addEventListener("click", (e) => {
@@ -710,30 +1085,121 @@ function inicializarContenidoDinamico() {
             // Determinar qué sección mostrar según el enlace clickeado
             if (section === "menuCourses") {
                 sectionKey = "courses";
+                showSection(sectionKey);
             } else if (section === "menuHistory") {
-                sectionKey = "history";
+                // Caso especial para historia - mostrar sección especial
+                showHistorySection();
+                return;
             } else if (section === "menuTheory") {
                 sectionKey = "theory";
+                showSection(sectionKey);
             } else if (section === "menuHome") {
                 sectionKey = "home";
+                showSection(sectionKey);
             }
             
-            // Mostrar la sección correspondiente
-            if (sectionKey) {
-                showSection(sectionKey);
-                
-                // Marcar enlace como activo
+            // Marcar enlace como activo (excepto para historia que ya se maneja arriba)
+            if (sectionKey && sectionKey !== "history") {
                 link.classList.add("active-section");
             }
         });
     });
 
-    // Función auxiliar para obtener idioma actual
-    function getCurrentLanguage() {
-        const selectedFlag = document.querySelector('.languaje-selected .flag');
-        if (selectedFlag.style.backgroundImage.includes('ES')) return 'es';
-        if (selectedFlag.style.backgroundImage.includes('GB')) return 'en';
-        if (selectedFlag.style.backgroundImage.includes('BR')) return 'pt';
-        return 'es'; // default
+    // Hacer la función showSection global para que el botón de volver funcione
+    window.showSection = showSection;
+}
+
+// ===== MENÚ HAMBURGUESA =====
+function inicializarMenuHamburguesa() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('.nav-menu');
+    const navSearch = document.querySelector('.nav-search');
+    const navAuth = document.querySelector('.nav-auth');
+    const languageSelector = document.querySelector('.languaje');
+    
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            // Toggle del menú principal
+            navMenu.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+            
+            // Mostrar/ocultar elementos adicionales en móvil
+            if (navMenu.classList.contains('active')) {
+                // Cuando el menú está abierto
+                if (navSearch) navSearch.style.display = 'block';
+                if (navAuth) navAuth.style.display = 'flex';
+                if (languageSelector) languageSelector.style.display = 'block';
+                
+                // Añadir estilos para móvil
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Cuando el menú está cerrado
+                if (window.innerWidth <= 900) {
+                    if (navSearch) navSearch.style.display = 'none';
+                    if (navAuth) navAuth.style.display = 'none';
+                    if (languageSelector) languageSelector.style.display = 'none';
+                }
+                
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Cerrar menú al hacer clic en un enlace
+        const navLinks = navMenu.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) {
+                    navMenu.classList.remove('active');
+                    mobileMenuBtn.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    
+                    // Ocultar elementos adicionales
+                    if (navSearch) navSearch.style.display = 'none';
+                    if (navAuth) navAuth.style.display = 'none';
+                    if (languageSelector) languageSelector.style.display = 'none';
+                }
+            });
+        });
+        
+        // Cerrar menú al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 900 && 
+                !navMenu.contains(e.target) && 
+                !mobileMenuBtn.contains(e.target) &&
+                navMenu.classList.contains('active')) {
+                
+                navMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                
+                // Ocultar elementos adicionales
+                if (navSearch) navSearch.style.display = 'none';
+                if (navAuth) navAuth.style.display = 'none';
+                if (languageSelector) languageSelector.style.display = 'none';
+            }
+        });
+        
+        // Manejar cambios de tamaño de ventana
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 900) {
+                // En pantallas grandes, asegurar que todo esté visible
+                navMenu.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                
+                if (navSearch) navSearch.style.display = 'block';
+                if (navAuth) navAuth.style.display = 'flex';
+                if (languageSelector) languageSelector.style.display = 'block';
+            } else {
+                // En pantallas pequeñas, ocultar elementos inicialmente
+                if (!navMenu.classList.contains('active')) {
+                    if (navSearch) navSearch.style.display = 'none';
+                    if (navAuth) navAuth.style.display = 'none';
+                    if (languageSelector) languageSelector.style.display = 'none';
+                }
+            }
+        });
     }
 }
