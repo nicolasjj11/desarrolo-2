@@ -568,7 +568,7 @@ function inicializarIdioma() {
             mi_perfil: "Meu Perfil",
             configuracion: "Configurações",
             cerrar_sesion: "Sair",
-            backToHome: "Voltar ao Início"
+            backToHome: "Voltar ao Início",
             btnViewCourse: "Ver Curso"
         }
     };
