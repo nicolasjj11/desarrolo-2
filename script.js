@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     inicializarModales();
     inicializarEventListeners();
     verificarUsuarioLogueado();
+    inicializarIdioma();
 });
 
 function inicializarModales() {
@@ -121,6 +122,20 @@ function inicializarEventListeners() {
     document.addEventListener("keydown", function(e) {
         if (e.key === "Escape") {
             cerrarModal('loginModal');
+            cerrarModal('registerModal');
+        }
+    });
+    
+    // Cerrar modales al hacer clic fuera
+    document.addEventListener("click", function(e) {
+        const loginModal = document.getElementById("loginModal");
+        const registerModal = document.getElementById("registerModal");
+        
+        if (loginModal && e.target === loginModal) {
+            cerrarModal('loginModal');
+        }
+        
+        if (registerModal && e.target === registerModal) {
             cerrarModal('registerModal');
         }
     });
@@ -374,8 +389,8 @@ function cerrarSesion() {
     console.log('Sesión cerrada');
 }
 
-// ===== FUNCIONALIDAD DE IDIOMA (tu código original) =====
-document.addEventListener("DOMContentLoaded", () => {
+// ===== FUNCIONALIDAD DE IDIOMA =====
+function inicializarIdioma() {
     const lang = document.querySelector(".languaje");
     if (!lang) return;
     
@@ -395,9 +410,11 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Explora clases interactivas, conoce la historia de la música y descubre cómo cada nota puede transformar tu forma de sentir y expresarte. ¡Empieza hoy tu viaje musical con nosotros!",
             btnStart: "Comenzar Ahora",
             coursesTitle: "Cursos Populares",
-            course1: "Instrumentos",
-            course2: "Teoría Musical",
-            course3: "Entrenamiento Vocal"
+            course1: "Instrumentos de Viento",
+            course2: "Instrumentos de Cuerda",
+            course3: "Piano & Teclados",
+            course4: "Percusión",
+            course5: "Teoría Musical"
         },
         en: {
             menuHome: "Home",
@@ -411,9 +428,11 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Explore interactive lessons, learn about music history, and discover how every note can transform the way you feel and express yourself. Start your musical journey with us today!",
             btnStart: "Start Now",
             coursesTitle: "Popular Courses",
-            course1: "Instruments",
-            course2: "Music Theory",
-            course3: "Vocal Training"
+            course1: "Wind Instruments",
+            course2: "String Instruments",
+            course3: "Piano & Keyboards",
+            course4: "Percussion",
+            course5: "Music Theory"
         },
         pt: {
             menuHome: "Início",
@@ -427,9 +446,11 @@ document.addEventListener("DOMContentLoaded", () => {
             description: "Explore aulas interativas, conheça a história da música e descubra como cada nota pode transformar sua forma de sentir e se expressar. Comece sua jornada musical hoje!",
             btnStart: "Começar Agora",
             coursesTitle: "Cursos Populares",
-            course1: "Instrumentos",
-            course2: "Teoria Musical",
-            course3: "Treinamento Vocal"
+            course1: "Instrumentos de Sopro",
+            course2: "Instrumentos de Corda",
+            course3: "Piano & Teclados",
+            course4: "Percussão",
+            course5: "Teoria Musical"
         }
     };
 
@@ -455,14 +476,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
             document.querySelectorAll("[data-translate]").forEach((el) => {
                 const key = el.getAttribute("data-translate");
-                el.textContent = translations[selectedLang][key];
+                if (translations[selectedLang][key]) {
+                    el.textContent = translations[selectedLang][key];
+                }
             });
 
             // Cambiar placeholder
             document.querySelectorAll("[data-translate-placeholder]").forEach((el) => {
                 const key = el.getAttribute("data-translate-placeholder");
-                el.placeholder = translations[selectedLang][key];
+                if (translations[selectedLang][key]) {
+                    el.placeholder = translations[selectedLang][key];
+                }
             });
         });
     });
-});
+}

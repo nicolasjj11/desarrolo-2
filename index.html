@@ -45,8 +45,6 @@
         <button class="auth-btn login-btn" data-translate="btnLogin">Iniciar Sesión</button>
         <button class="auth-btn signup-btn" data-translate="btnSignup">Crear Cuenta</button>
       </div>
-</div>
-
 
       <!-- Selector de idioma -->
       <div class="languaje">
@@ -74,7 +72,6 @@
       </div>
     </div>
   </nav>
-  
 
   <div class="container">
     <main class="main-content">
@@ -91,226 +88,160 @@
 
       <section class="courses-section">
         <h2 class="section-title" data-translate="coursesTitle">Cursos Populares</h2>
+       
         <div class="courses-grid">
           <div class="course-card">
-            <h3 data-translate="course1">Instrumentos</h3>
+            <h3 data-translate="course1">Instrumentos de Viento</h3>
+            <div class="instrument-types">
+              <span class="instrument-type">🎺</span>
+              <span class="instrument-type">🎷</span>
+              <span class="instrument-type">🪈</span>
+            </div>
           </div>
           <div class="course-card">
-            <h3 data-translate="course2">Teoría Musical</h3>
+            <h3 data-translate="course2">Instrumentos de Cuerda</h3>
+            <div class="instrument-types">
+              <span class="instrument-type">🎸</span>
+              <span class="instrument-type">🎻</span>
+              <span class="instrument-type">🪕</span>
+            </div>
           </div>
           <div class="course-card">
-            <h3 data-translate="course3">Entrenamiento Vocal</h3>
+            <h3 data-translate="course3">Piano & Teclados</h3>
+            <div class="instrument-types">
+              <span class="instrument-type">🎹</span>
+              <span class="instrument-type">🎹</span>
+            </div>
+          </div>
+          <div class="course-card">
+            <h3 data-translate="course4">Percusión</h3>
+            <div class="instrument-types">
+              <span class="instrument-type">🥁</span>
+              <span class="instrument-type">🎵</span>
+              <span class="instrument-type">🪘</span>
+            </div>
+          </div>
+          <div class="course-card">
+            <h3 data-translate="course5">Teoría Musical</h3>
+            <div class="instrument-types">
+              <span class="instrument-type">🎼</span>
+              <span class="instrument-type">📚</span>
+            </div>
           </div>
         </div>
+      </section>
+      
+      <!-- Sección de contenido dinámico -->
+      <section class="dynamic-content-section" id="dynamic-content">
+        <!-- El contenido se cargará aquí dinámicamente -->
       </section>
     </main>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const lang = document.querySelector(".languaje");
-      const dropdown = lang.querySelector("ul");
-      const selected = lang.querySelector(".languaje-selected");
-
-      // Traducciones
-      const translations = {
-        es: {
-          menuHome: "Inicio",
-          menuCourses: "Cursos",
-          menuHistory: "Historia de la Música",
-          menuTheory: "Teoría Musical",
-          searchPlaceholder: "Buscar cursos...",
-          btnLogin: "Iniciar Sesión",
-          btnSignup: "Crear Cuenta",
-          title: "Bienvenido a MSC STUDY, el lugar donde aprender música se convierte en una experiencia única",
-          description: "Explora clases interactivas, conoce la historia de la música y descubre cómo cada nota puede transformar tu forma de sentir y expresarte. ¡Empieza hoy tu viaje musical con nosotros!",
-          btnStart: "Comenzar Ahora",
-          coursesTitle: "Cursos Populares",
-          course1: "Instrumentos",
-          course2: "Teoría Musical",
-          course3: "Entrenamiento Vocal"
-        },
-        en: {
-          menuHome: "Home",
-          menuCourses: "Courses",
-          menuHistory: "Music History",
-          menuTheory: "Music Theory",
-          searchPlaceholder: "Search courses...",
-          btnLogin: "Login",
-          btnSignup: "Sign Up",
-          title: "Welcome to MSC STUDY, where learning music becomes a unique experience",
-          description: "Explore interactive lessons, learn about music history, and discover how every note can transform the way you feel and express yourself. Start your musical journey with us today!",
-          btnStart: "Start Now",
-          coursesTitle: "Popular Courses",
-          course1: "Instruments",
-          course2: "Music Theory",
-          course3: "Vocal Training"
-        },
-        pt: {
-          menuHome: "Início",
-          menuCourses: "Cursos",
-          menuHistory: "História da Música",
-          menuTheory: "Teoria Musical",
-          searchPlaceholder: "Procurar cursos...",
-          btnLogin: "Entrar",
-          btnSignup: "Criar Conta",
-          title: "Bem-vindo ao MSC STUDY, onde aprender música se torna uma experiência única",
-          description: "Explore aulas interativas, conheça a história da música e descubra como cada nota pode transformar sua forma de sentir e se expressar. Comece sua jornada musical hoje!",
-          btnStart: "Começar Agora",
-          coursesTitle: "Cursos Populares",
-          course1: "Instrumentos",
-          course2: "Teoria Musical",
-          course3: "Treinamento Vocal"
-        }
-      };
-
-      // Mostrar / ocultar menú
-      selected.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle("show");
-      });
-
-      document.addEventListener("click", () => {
-        dropdown.classList.remove("show");
-      });
-
-      // Cambiar idioma
-      lang.querySelectorAll("li").forEach((item) => {
-        item.addEventListener("click", (e) => {
-          e.preventDefault();
-          const flagUrl = item.getAttribute("data-flag");
-          const selectedLang = item.getAttribute("data-lang");
-
-          selected.innerHTML = `<span class="flag" style="background-image: url('${flagUrl}');"></span>`;
-          dropdown.classList.remove("show");
-
-          document.querySelectorAll("[data-translate]").forEach((el) => {
-            const key = el.getAttribute("data-translate");
-            el.textContent = translations[selectedLang][key];
-          });
-
-          // Cambiar placeholder
-          document.querySelectorAll("[data-translate-placeholder]").forEach((el) => {
-            const key = el.getAttribute("data-translate-placeholder");
-            el.placeholder = translations[selectedLang][key];
-          });
-        });
-      });
-    });
-  </script>
-  
   <!-- Modal de Login -->
-   <!-- Modal de Login -->
-<div class="wrapper" id="loginModal" style="display: none;">
-  <div class="login-box">
-    <span class="close-login">&times;</span>
-    <h2>Iniciar Sesión</h2>
-    <form id="loginForm">
-      <div class="input-group">
-        <i class="fas fa-envelope icon"></i>
-        <input type="email" id="email" name="email" required>
-        <label for="email">Email</label>
-      </div>
-      
-      <div class="input-group">
-        <i class="fas fa-lock icon"></i>
-        <input type="password" id="password" name="password" required>
-        <label for="password">Contraseña</label>
-      </div>
-      
-      <div class="extras">
-        <label>
-          <input type="checkbox" id="remember" name="remember"> 
-          Recuérdame
-        </label>
-        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-      </div>
-      
-      <button class="btn-login" type="submit">Entrar</button>
-      
-      <div class="form-message" id="formMessage"></div>
-      
-      <p class="register-text">
-        ¿No tienes cuenta? <a href="#" class="register-link">Regístrate</a>
-      </p>
-    </form>
+  <div class="wrapper" id="loginModal" style="display: none;">
+    <div class="login-box">
+      <span class="close-login">&times;</span>
+      <h2>Iniciar Sesión</h2>
+      <form id="loginForm">
+        <div class="input-group">
+          <i class="fas fa-envelope icon"></i>
+          <input type="email" id="email" name="email" required>
+          <label for="email">Email</label>
+        </div>
+        
+        <div class="input-group">
+          <i class="fas fa-lock icon"></i>
+          <input type="password" id="password" name="password" required>
+          <label for="password">Contraseña</label>
+        </div>
+        
+        <div class="extras">
+          <label>
+            <input type="checkbox" id="remember" name="remember"> 
+            Recuérdame
+          </label>
+          <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+        </div>
+        
+        <button class="btn-login" type="submit">Entrar</button>
+        
+        <div class="form-message" id="formMessage"></div>
+        
+        <p class="register-text">
+          ¿No tienes cuenta? <a href="#" class="register-link">Regístrate</a>
+        </p>
+      </form>
+    </div>
   </div>
-</div>
-<<!-- Modal de Registro -->
-<div class="wrapper" id="registerModal" style="display: none;">
-  <div class="login-box">
-    <span class="close-register">&times;</span>
-    <h2>Crear Cuenta</h2>
-    <form id="registerForm">
-      <div class="input-group">
-        <i class="fas fa-user icon"></i>
-        <input type="text" id="regName" name="name" required>
-        <label for="regName">Nombre Completo</label>
-      </div>
-      
-      <div class="input-group">
-        <i class="fas fa-envelope icon"></i>
-        <input type="email" id="regEmail" name="email" required>
-        <label for="regEmail">Email</label>
-      </div>
-      
-      <div class="input-group">
-        <i class="fas fa-lock icon"></i>
-        <input type="password" id="regPassword" name="password" required>
-        <label for="regPassword">Contraseña</label>
-      </div>
-      
-      <div class="input-group">
-        <i class="fas fa-lock icon"></i>
-        <input type="password" id="regConfirmPassword" name="confirmPassword" required>
-        <label for="regConfirmPassword">Confirmar Contraseña</label>
-      </div>
-      
-      <button class="btn-login" type="submit">Crear Cuenta</button>
-      
-      <div class="form-message" id="registerMessage"></div>
-      
-      <p class="register-text">
-        ¿Ya tienes cuenta? <a href="#" class="login-link">Iniciar Sesión</a>
-      </p>
-    </form>
-  </div>
-</div>
 
-<!-- Perfil de Usuario (oculto inicialmente) -->
-<div class="user-profile" id="userProfile" style="display: none;">
-  <div class="nav-auth">
-    <div class="user-menu">
-      <button class="user-btn" id="userMenuBtn">
-        <i class="fas fa-user-circle"></i>
-        <span id="userName">Usuario</span>
-        <i class="fas fa-chevron-down"></i>
-      </button>
-      <div class="user-dropdown" id="userDropdown">
-        <a href="#" class="user-dropdown-item" id="profileLink">
-          <i class="fas fa-user"></i> Mi Perfil
-        </a>
-        <a href="#" class="user-dropdown-item" id="settingsLink">
-          <i class="fas fa-cog"></i> Configuración
-        </a>
-        <a href="#" class="user-dropdown-item" id="logoutLink">
-          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-        </a>
+  <!-- Modal de Registro -->
+  <div class="wrapper" id="registerModal" style="display: none;">
+    <div class="login-box">
+      <span class="close-register">&times;</span>
+      <h2>Crear Cuenta</h2>
+      <form id="registerForm">
+        <div class="input-group">
+          <i class="fas fa-user icon"></i>
+          <input type="text" id="regName" name="name" required>
+          <label for="regName">Nombre Completo</label>
+        </div>
+        
+        <div class="input-group">
+          <i class="fas fa-envelope icon"></i>
+          <input type="email" id="regEmail" name="email" required>
+          <label for="regEmail">Email</label>
+        </div>
+        
+        <div class="input-group">
+          <i class="fas fa-lock icon"></i>
+          <input type="password" id="regPassword" name="password" required>
+          <label for="regPassword">Contraseña</label>
+        </div>
+        
+        <div class="input-group">
+          <i class="fas fa-lock icon"></i>
+          <input type="password" id="regConfirmPassword" name="confirmPassword" required>
+          <label for="regConfirmPassword">Confirmar Contraseña</label>
+        </div>
+        
+        <button class="btn-login" type="submit">Crear Cuenta</button>
+        
+        <div class="form-message" id="registerMessage"></div>
+        
+        <p class="register-text">
+          ¿Ya tienes cuenta? <a href="#" class="login-link">Iniciar Sesión</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Perfil de Usuario (oculto inicialmente) -->
+  <div class="user-profile" id="userProfile" style="display: none;">
+    <div class="nav-auth">
+      <div class="user-menu">
+        <button class="user-btn" id="userMenuBtn">
+          <i class="fas fa-user-circle"></i>
+          <span id="userName">Usuario</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="user-dropdown" id="userDropdown">
+          <a href="#" class="user-dropdown-item" id="profileLink">
+            <i class="fas fa-user"></i> Mi Perfil
+          </a>
+          <a href="#" class="user-dropdown-item" id="settingsLink">
+            <i class="fas fa-cog"></i> Configuración
+          </a>
+          <a href="#" class="user-dropdown-item" id="logoutLink">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-
-
-
-
-      <script src="script.js"></script>
-      <script  type = "module"  src = " https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js " > </script>  
-  <script nomodule src = " https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js " >   </script>
-
-  
-  
+  <script src="script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
-
 </html>
