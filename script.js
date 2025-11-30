@@ -509,17 +509,7 @@ function inicializarIdioma() {
             video11Desc: "Master the concepts of rhythm, tempo, and time signatures.",
             video12Title: "Musical Improvisation",
             video12Desc: "Develop skills to improvise over chord progressions.",
-            btnViewCourse: "View Course",
-            signup_titulo: "Create Account",
-            name_placeholder: "Full Name",
-            confirm_password_placeholder: "Confirm Password",
-            boton_registrarse: "Create Account",
-            ya_tienes_cuenta: "Already have an account?",
-            iniciar_sesion: "Login",
-            mi_perfil: "My Profile",
-            configuracion: "Settings",
-            cerrar_sesion: "Logout",
-            backToHome: "Back to Home"
+            btnViewCourse: "View Course"
         },
         pt: {
             menuHome: "Início",
@@ -579,6 +569,7 @@ function inicializarIdioma() {
             configuracion: "Configurações",
             cerrar_sesion: "Sair",
             backToHome: "Voltar ao Início"
+            btnViewCourse: "Ver Curso"
         }
     };
 
