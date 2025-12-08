@@ -8,6 +8,7 @@ body, html {
   width: 100%;
   height: 100%;
   font-family: 'Arial', sans-serif;
+  overflow-x: hidden;
 }
 
 /* ===== IMAGEN DE FONDO ===== */
@@ -49,7 +50,7 @@ body, html {
   top: 0;
   width: 100%;
   z-index: 1000;
-  padding: 10px 2rem;
+  padding: 10px 0;
 }
 
 .nav-container {
@@ -60,6 +61,7 @@ body, html {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  height: 100%;
 }
 
 /* Logo */
@@ -98,9 +100,14 @@ body, html {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   flex: 1;
   justify-content: center;
+}
+
+.nav-menu-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .nav-link {
@@ -206,13 +213,28 @@ body, html {
   box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
 }
 
-/* Botón menú móvil */
+/* ===== MENÚ HAMBURGUESA ===== */
 .mobile-menu-btn {
   display: none;
-  font-size: 1.3rem;
-  color: #4a5568;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  background: transparent;
+  border: none;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0;
+  z-index: 10;
+}
+
+.mobile-menu-btn i {
+  font-size: 1.8rem;
+  color: #f7fafc;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu-btn:hover i {
+  color: #ff6b6b;
 }
 
 /* ===== PERFIL DE USUARIO ===== */
@@ -543,100 +565,6 @@ body, html {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-/* ===== CARRUSEL DE IMÁGENES ===== */
-.carousel-container {
-  position: relative;
-  width: 100%;
-  max-width: 800px;
-  margin: 2rem auto;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.carousel {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.carousel-slide {
-  min-width: 100%;
-  position: relative;
-}
-
-.carousel-slide img {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  display: block;
-}
-
-.carousel-caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 1rem;
-  text-align: center;
-}
-
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.7);
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.carousel-btn:hover {
-  background: rgba(255, 255, 255, 0.9);
-}
-
-.carousel-btn.prev {
-  left: 15px;
-}
-
-.carousel-btn.next {
-  right: 15px;
-}
-
-.carousel-indicators {
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  z-index: 10;
-}
-
-.carousel-indicator {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.carousel-indicator.active {
-  background: white;
-  transform: scale(1.2);
 }
 
 /* ===== SELECTOR DE IDIOMA ===== */
@@ -1118,6 +1046,105 @@ body, html {
   font-weight: 700;
 }
 
+/* ===== CARRUSEL DE IMÁGENES ===== */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem auto;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 400px;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+.carousel-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-btn.prev {
+  left: 15px;
+}
+
+.carousel-btn.next {
+  right: 15px;
+}
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  z-index: 10;
+}
+
+.carousel-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-indicator.active {
+  background: white;
+  transform: scale(1.2);
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1200px) {
   .nav-container {
@@ -1125,7 +1152,7 @@ body, html {
     padding: 0 1.5rem;
   }
   
-  .nav-menu {
+  .nav-menu-inner {
     gap: 0.3rem;
   }
   
@@ -1136,11 +1163,11 @@ body, html {
 }
 
 @media (max-width: 1024px) {
-  .nav-search {
+  .nav-search.desktop-search {
     flex: 0 1 200px;
   }
   
-  .nav-auth {
+  .nav-auth.desktop-auth {
     gap: 0.5rem;
   }
   
@@ -1150,21 +1177,90 @@ body, html {
   }
 }
 
+/* Menú hamburguesa en tablet */
 @media (max-width: 900px) {
   .nav-menu {
-    display: none;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: #2d3748;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   }
   
-  .nav-search {
-    display: none;
+  .nav-menu.active {
+    height: calc(100vh - 80px);
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  
+  .nav-menu-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease 0.1s;
+  }
+  
+  .nav-menu.active .nav-menu-inner {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .nav-link {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    border-radius: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1.1rem;
+    text-align: left;
+  }
+  
+  .nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .mobile-only {
+    display: block;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .mobile-search {
+    margin-bottom: 1.5rem;
+  }
+  
+  .mobile-auth {
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .mobile-auth .auth-btn {
+    width: 100%;
+  }
+  
+  .desktop-search,
+  .desktop-auth,
+  .desktop-user {
+    display: none !important;
   }
   
   .mobile-menu-btn {
-    display: block;
+    display: flex;
   }
   
-  .nav-container {
-    justify-content: space-between;
+  .mobile-menu-btn.active i {
+    content: '\f00d';
   }
 }
 
@@ -1195,8 +1291,8 @@ body, html {
     grid-template-columns: 1fr;
   }
   
-  /* Carrusel Responsive */
-  .carousel-slide img {
+  /* Carrusel responsive */
+  .carousel {
     height: 300px;
   }
   
@@ -1204,6 +1300,11 @@ body, html {
     width: 40px;
     height: 40px;
     font-size: 1.2rem;
+  }
+  
+  .carousel-caption {
+    font-size: 1rem;
+    padding: 0.8rem;
   }
   
   /* Footer Responsive */
@@ -1231,8 +1332,8 @@ body, html {
     font-size: 1.1rem;
   }
   
-  .nav-auth {
-    display: none;
+  .nav-menu.active {
+    padding: 1.5rem;
   }
   
   .main-title {
@@ -1244,8 +1345,13 @@ body, html {
     font-size: 1rem;
   }
   
-  /* Carrusel Responsive */
-  .carousel-slide img {
+  .login-box {
+    width: 90%;
+    padding: 30px 25px;
+  }
+  
+  /* Carrusel responsive */
+  .carousel {
     height: 250px;
   }
   
@@ -1256,8 +1362,8 @@ body, html {
   }
   
   .carousel-caption {
-    padding: 0.5rem;
     font-size: 0.9rem;
+    padding: 0.5rem;
   }
   
   /* Footer Responsive */
@@ -1268,4 +1374,9 @@ body, html {
   .footer-container {
     padding: 0 1rem;
   }
+}
+
+/* Clases utilitarias */
+.mobile-only {
+  display: none;
 }

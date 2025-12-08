@@ -24,13 +24,52 @@
       </div>
 
       <div class="nav-menu">
-        <a href="#home" class="nav-link active" data-translate="menuHome">Inicio</a>
-        <a href="#courses" class="nav-link" data-translate="menuCourses">Cursos</a>
-        <a href="#history" class="nav-link" data-translate="menuHistory">Historia de la Música</a>
-        <a href="#theory" class="nav-link" data-translate="menuTheory">Teoría Musical</a>
+        <div class="nav-menu-inner">
+          <a href="#home" class="nav-link active" data-translate="menuHome">Inicio</a>
+          <a href="#courses" class="nav-link" data-translate="menuCourses">Cursos</a>
+          <a href="#history" class="nav-link" data-translate="menuHistory">Historia de la Música</a>
+          <a href="#theory" class="nav-link" data-translate="menuTheory">Teoría Musical</a>
+          
+          <!-- Elementos móviles ocultos en desktop -->
+          <div class="mobile-only">
+            <div class="nav-search mobile-search">
+              <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" data-translate-placeholder="searchPlaceholder"
+                  placeholder="Buscar cursos...">
+              </div>
+            </div>
+            
+            <div class="nav-auth mobile-auth">
+              <button class="auth-btn login-btn" data-translate="btnLogin">Iniciar Sesión</button>
+              <button class="auth-btn signup-btn" data-translate="btnSignup">Crear Cuenta</button>
+            </div>
+            
+            <!-- Perfil móvil -->
+            <div class="user-profile mobile-user" id="mobileUserProfile" style="display: none;">
+              <div class="user-menu">
+                <button class="user-btn" id="mobileUserMenuBtn">
+                  <i class="fas fa-user-circle"></i>
+                  <span id="mobileUserName">Usuario</span>
+                </button>
+                <div class="user-dropdown mobile-dropdown" id="mobileUserDropdown">
+                  <a href="#" class="user-dropdown-item" id="mobileProfileLink">
+                    <i class="fas fa-user"></i> <span data-translate="myProfile">Mi Perfil</span>
+                  </a>
+                  <a href="#" class="user-dropdown-item" id="mobileSettingsLink">
+                    <i class="fas fa-cog"></i> <span data-translate="settings">Configuración</span>
+                  </a>
+                  <a href="#" class="user-dropdown-item" id="mobileLogoutLink">
+                    <i class="fas fa-sign-out-alt"></i> <span data-translate="logout">Cerrar Sesión</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="nav-search">
+      <div class="nav-search desktop-search">
         <div class="search-container">
           <i class="fas fa-search search-icon"></i>
           <input type="text" class="search-input" data-translate-placeholder="searchPlaceholder"
@@ -38,20 +77,20 @@
         </div>
       </div>
 
-      <div class="nav-auth">
+      <div class="nav-auth desktop-auth">
         <button class="auth-btn login-btn" data-translate="btnLogin">Iniciar Sesión</button>
         <button class="auth-btn signup-btn" data-translate="btnSignup">Crear Cuenta</button>
       </div>
 
       <!-- Perfil de Usuario (oculto inicialmente) -->
-      <div class="user-profile" id="userProfile" style="display: none;">
+      <div class="user-profile desktop-user" id="userProfile" style="display: none;">
         <div class="user-menu">
           <button class="user-btn" id="userMenuBtn">
             <i class="fas fa-user-circle"></i>
             <span id="userName">Usuario</span>
             <i class="fas fa-chevron-down"></i>
           </button>
-          <div class="user-dropdown" id="userDropdown">
+          <div class="user-dropdown desktop-dropdown" id="userDropdown">
             <a href="#" class="user-dropdown-item" id="profileLink">
               <i class="fas fa-user"></i> <span data-translate="myProfile">Mi Perfil</span>
             </a>
@@ -219,7 +258,7 @@
           <a href="https://web.facebook.com/profile.php?id=61584332404637" class="social-link" aria-label="Facebook" target="_blank">
             <i class="fab fa-facebook-f"></i>
           </a>
-          <a href="#" class="social-link" aria-label="Instagram" target="_blank">
+          <a href="https://www.instagram.com/msc_studyia/" class="social-link" aria-label="Instagram" target="_blank">
             <i class="fab fa-instagram"></i>
           </a>
           <a href="https://wa.me/573247650697" class="social-link" aria-label="WhatsApp" target="_blank">
